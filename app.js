@@ -87,6 +87,7 @@ app.get("/", (req, res) => {
 //Route API
 require('./routes/auth.routes')(app);
 require('./routes/utilisateur.routes')(app);
+require('./routes/role.routes')(app);
 
 // Demarrage serveur
 const PORT = process.env.PORT || 8080;
