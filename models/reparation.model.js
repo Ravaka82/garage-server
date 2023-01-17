@@ -8,5 +8,4 @@ const Reparation = mongoose.model(
         vehicule: { type: mongoose.Schema.Types.ObjectId, ref: 'Vehicule' },
     })
   );
-  
   module.exports = Reparation;
