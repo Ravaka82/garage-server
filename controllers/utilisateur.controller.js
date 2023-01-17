@@ -9,3 +9,4 @@
   exports.responsableFinancierBoard = (req, res) => {
     res.status(200).send("Contenu responsable financier");
   };
+  

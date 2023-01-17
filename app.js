@@ -100,7 +100,8 @@ app.get("/", (req, res) => {
 require('./routes/auth.routes')(app);
 require('./routes/utilisateur.routes')(app);
 require('./routes/role.routes')(app);
-
+require('./routes/vehicule.routes')(app);
+require('./routes/typeReparation.routes')(app);
 // Demarrage serveur
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
