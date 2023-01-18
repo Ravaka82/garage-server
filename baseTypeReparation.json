@@ -1,68 +1,89 @@
-[
-    {
-        "nomTypeReparation": "carrosserie",
-        "description": "Elle consiste à renover votre voiture.Différente techniques peuvent être utilisées : Le remplacement de la pièce : en cas de dommage important, il est possible de remplacer la pièce abîmée sans toucher au reste de la carrosserie s'il est intact.Le redressage : il consiste à redresser une zone déformée après un choc grâce à des outils spéciaux.Le débosselage : c'est une technique qui vise à supprimer les impacts et bosses causés par un choc.",
-        "image": "carros.jpg",
-        "prixReparation": 320000
-    },
-    {
-        "nomTypeReparation": "pneus",
-        "description": "Elle consiste au changement de pneus ;Le contrôle du parallélisme et géométrie ;L’équilibrage des pneus ;Le remplacement de roulement de roue.",
-        "image": "pneu.jpg",
-        "prixReparation": 20000
-    },
-    {
-        "nomTypeReparation": "pare-brise",
-        "description": "reparer un impact ou remplacer son pare-brise",
-        "image": "pare.jpg",
-        "prixReparation": 300000
-    },
-    {
-        "nomTypeReparation": "Plaquette de frein",
-        "description": "Nos devis Freinage peuvent concerner unes ou plusieurs des interventions suivantes selon l'état d'usure de vos pièces :-le changement des plaquettes de freins,-le changement des disques,-une intervention sur les mâchoires",
-        "image": "frein.jpg",
-        "prixReparation": 400000
-    },
-    {
-        "nomTypeReparation": "echappement",
-        "description": "Les etapes :-Humidifiez la zone à réparer avec de l'eau ;-Appliquez le mastic autour du trou et à l'intérieur de celui-ci ;-Faites tourner le moteur pendant une dizaine de minutes pour faire sécher la pâte ;Laissez reposer la pâte pendant au moins 24 heures",
-        "image": "echapement.jpg",
-        "prixReparation": 200000
-    },
-    {
-        "nomTypeReparation": "Vidange",
-        "description": "Notre devis de vidange moteur comprend les opérations suivantes :-Vidange huile moteur-Remplacement du joint de bouchon de vidange-Remplacement du filtre à huile.",
-        "image": "vidange.jpg",
-        "prixReparation": 165000
-    },
-    {
-        "nomTypeReparation": "amortisseur",
-        "description": "le devis pour changer des amortisseurs de voiture : remplacement des amortisseurs avant, arrière ou les deux.KIT AMORTISSEURS TRAIN AVANT (OU ARRIÈRE):-1 Paire d’amortisseurs Avant (ou arrière)-Coupelles d’amortisseurs Avant (ou arrière)KIT AMORTISSEURS TRAIN AVANT + ARRIÈRE:-2 Paires d’amortisseurs Avant + Arrière-Coupelles d’amortisseurs Avant + Arrière",
-        "image": "amortisseur.jpg",
-        "prixReparation": 350000 
-    },
-    {
-        "nomTypeReparation": "embrayage",
-        "description": "Les étapes à faire:remplacement du Disque embrayage;Butée d'embrayage;Vidange de boite de vitesse;Bagues de cardan Avant Droit et Avant Gauche;Liquide hydraulique;Nettoyant",
-        "image": "embrayage.jpg",
-        "prixReparation": 250000 
-    },
-    {
-        "nomTypeReparation": "courroie de distribution",
-        "description": "Notre devis de remplacement du kit de distribution comprend les opérations suivantes :-Remplacement de courroie de distribution ;-Changement des galets de distribution ;-Changement de la pompe à eau ;-Remplacement du liquide de refroidissement ;-Changement de la courroie d’accessoires ;-Changement des galets d’accessoires (non compris dans le devis, le garage peut vous conseiller et si besoin vous proposer un devis séparément).",
-        "image": "courroie.jpg",
-        "prixReparation": 400000 
-    },
-    {
-        "nomTypeReparation": "moteur",
-        "description": "Le remplacement des injecteurs, du filtre à air, du filtre à carburant gasoil et essence ;Le décalaminage moteur ;Traiter les problèmes d’allumage du moteur ;Le remplacement des bougies ;Le remplacement du liquide de refroidissement.",
-        "image": "moteur.jpg",
-        "prixReparation": 600000 
-    },
-    {
-        "nomTypeReparation": "climatisation",
-        "description": "Notre devis de recharge climatisation comprend des opérations suivantes :-Gaz de recharge réfrigérant ;-Contrôle de l'étanchéité du système (une micro fuite au niveau du compresseur, d'un raccord ou d'un tuyau risque d’endommager le véhicule).",
-        "image": "clime.jpg",
-        "prixReparation": 100000 
-    }
-]
+[{
+  "_id": {
+    "$oid": "63c7ae4e05f008911b95e190"
+  },
+  "nomTypeReparation": "carrosserie",
+  "description": "Elle consiste à renover votre voiture.Différente techniques peuvent être utilisées : Le remplacement de la pièce.",
+  "image": "carros.jpg",
+  "prixReparation": 320000
+},{
+  "_id": {
+    "$oid": "63c7ae4e05f008911b95e191"
+  },
+  "nomTypeReparation": "pneus",
+  "description": "Elle consiste au changement de pneus ,Le contrôle du parallélisme et géométrie ,L’équilibrage des pneus .",
+  "image": "pneu.jpg",
+  "prixReparation": 20000
+},{
+  "_id": {
+    "$oid": "63c7ae4e05f008911b95e192"
+  },
+  "nomTypeReparation": "pare-brise",
+  "description": "reparer un impact ou remplacer son pare-brise,Le pare-brise doit comporter au maximum 3 impacts pour pouvoir être réparé",
+  "image": "pare.jpg",
+  "prixReparation": 300000
+},{
+  "_id": {
+    "$oid": "63c7ae4e05f008911b95e193"
+  },
+  "nomTypeReparation": "Plaquette de frein",
+  "description": "Nos devis Freinage peuvent concerner unes ou plusieurs des interventions suivantes selon l'état d'usure.",
+  "image": "frein.jpg",
+  "prixReparation": 400000
+},{
+  "_id": {
+    "$oid": "63c7ae4e05f008911b95e194"
+  },
+  "nomTypeReparation": "echappement",
+  "description": "Les etapes :-Humidifiez la zone à réparer avec de l'eau ;-Appliquez le mastic autour du trou .",
+  "image": "echapement.jpg",
+  "prixReparation": 200000
+},{
+  "_id": {
+    "$oid": "63c7ae4e05f008911b95e195"
+  },
+  "nomTypeReparation": "Vidange",
+  "description": "Vidange huile moteur-Remplacement du joint de bouchon de vidange-Remplacement du filtre à huile.",
+  "image": "vidange.jpg",
+  "prixReparation": 165000
+},{
+  "_id": {
+    "$oid": "63c7ae4e05f008911b95e196"
+  },
+  "nomTypeReparation": "amortisseur",
+  "description": "remplacement des amortisseurs avant, arrière ou les deux.KIT AMORTISSEURS TRAIN AVANT (OU ARRIÈRE).",
+  "image": "amortisseur.jpg",
+  "prixReparation": 350000
+},{
+  "_id": {
+    "$oid": "63c7ae4e05f008911b95e197"
+  },
+  "nomTypeReparation": "embrayage",
+  "description": "remplacement du Disque embrayage;Butée d'embrayage;Vidange de boite de vitesse;Bagues de cardan Avant Droit et Avant Gauche.",
+  "image": "embrayage.jpg",
+  "prixReparation": 250000
+},{
+  "_id": {
+    "$oid": "63c7ae4e05f008911b95e198"
+  },
+  "nomTypeReparation": "courroie de distribution",
+  "description": "remplacement du kit de distribution comprend les opérations suivantes :-Remplacement de courroie de distribution .",
+  "image": "courroie.jpg",
+  "prixReparation": 400000
+},{
+  "_id": {
+    "$oid": "63c7ae4e05f008911b95e199"
+  },
+  "nomTypeReparation": "moteur",
+  "description": "Le remplacement des injecteurs, du filtre à air, du filtre à carburant gasoil et essence ;Le décalaminage moteur .",
+  "image": "moteur.jpg",
+  "prixReparation": 600000
+},{
+  "_id": {
+    "$oid": "63c7ae4e05f008911b95e19a"
+  },
+  "nomTypeReparation": "climatisation",
+  "description": "Gaz de recharge réfrigérant ;-Contrôle de l'étanchéité du système (une micro fuite au niveau du compresseur, d'un raccord ou d'un tuyau).",
+  "image": "clime.jpg",
+  "prixReparation": 100000
+}]
