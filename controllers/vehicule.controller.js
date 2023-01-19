@@ -38,3 +38,16 @@ exports.createVehicule = (req, res) => {//insertion un vehicule d'un utilisateur
     });
   });
 };
+
+exports.findVoitureClient = (req, res) => { ///maka voiture rehetra client izay niinserena
+    console.log(req.body)
+    Vehicule.find({ utilisateur: req.body.utilisateurId },
+      (err, Vehicule) => {
+        if (err) {
+          res.status(500).send({ message: err });
+          return;
+        }
+        res.send(Vehicule);
+      }
+    )
+  }
