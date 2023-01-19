@@ -4,7 +4,7 @@ const cookieSession = require("cookie-session");
 const app = express();
 app.use(cors());
 var corsOptions = {
-  origin: "http://localhost:8081" // Cors ho an'ny côté front
+  origin: "http://localhost:8080" // Cors ho an'ny côté front
 };
 
 app.use(cors(corsOptions));
