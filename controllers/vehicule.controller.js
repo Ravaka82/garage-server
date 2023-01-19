@@ -51,3 +51,16 @@ exports.findVoitureClient = (req, res) => { ///maka voiture rehetra client izay 
       }
     )
   }
+
+exports.findVoitureValide = (req, res) => { ///maka voiture rehetra client izay status valide
+    console.log(req.params)
+    Vehicule.find({ status: 'valide' , utilisateur: req.params.utilisateurId },
+      (err, Vehicule) => {
+        if (err) {
+          res.status(500).send({ message: err });
+          return;
+        }
+        res.send(Vehicule);
+      }
+    )
+  }
