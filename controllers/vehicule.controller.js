@@ -41,7 +41,7 @@ exports.createVehicule = (req, res) => {//insertion un vehicule d'un utilisateur
 
 exports.findVoitureClient = (req, res) => { ///maka voiture rehetra client izay niinserena
     console.log(req.params)
-    Vehicule.find({ utilisateur: req.params.utilisateurId },
+    Vehicule.find({status: "non valider", utilisateur: req.params.utilisateurId },
       (err, Vehicule) => {
         if (err) {
           res.status(500).send({ message: err });

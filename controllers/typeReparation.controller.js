@@ -30,3 +30,15 @@ exports.findTypeReparation = (req, res) => { ///maka typeReparation rehetra
         res.send({ message: "TypeReparation was created successfully", typeReparation });
       });
   }
+  exports.findTypeReparationById = (req, res) => { ///maka typeReparation By id 
+    console.log(req.params.nomTypeReparation)
+    TypeReparation.find({_id:req.params._id},
+      (err, TypeReparation) => {
+        if (err) {
+          res.status(500).send({ message: err });
+          return;
+        }
+        res.send(TypeReparation);
+      }
+    )
+  }
