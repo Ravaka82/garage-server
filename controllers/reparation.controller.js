@@ -56,3 +56,12 @@ exports.findDepotReparationParVoiture = (req, res) => { ///maka reparation par u
     }
   );
 };
+exports.deleteReparation = (req, res) => {//delete reparation
+  Reparation.deleteOne({ _id: req.params._id })
+  .then(() => {
+  res.send({ message: "Reparation deleted successfully" });
+  })
+  .catch((err) => {
+  res.status(500).send({ message: "Error deleting reparation" });
+  });
+};

@@ -4,4 +4,5 @@ var bodyParser = require('body-parser');
 module.exports = function(app) {
     app.post("/api/reparation/createReparation", controller.createReparation);
     app.get("/api/reparation/findDepotReparationParVoiture/:utilisateurId", controller.findDepotReparationParVoiture);
+    app.delete("/api/reparation/deleteReparation/:_id", controller.deleteReparation);
 }
