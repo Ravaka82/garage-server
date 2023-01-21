@@ -6,7 +6,7 @@ const typeReparation = db.typeReparation;
 
 exports.createReparation = (req, res) => {
   //maka id anle vehicule kalo ra efa miexsiste ao 
-  vehicule.findOne({ _id: req.body.vehiculeId }, (err, vehicule) => {
+  vehicule.findOne({ _id: req.body.vehicule }, (err, vehicule) => {
    
     if (err) {
       return res.status(500).send({ message: err });
@@ -16,7 +16,7 @@ exports.createReparation = (req, res) => {
       return res.status(404).send({ message: "Vehicule not found" });
     }
 // dia efveo maka id anle typeReparation
-    typeReparation.findOne({ _id: req.body.typeReparationId }, (err, typeReparation) => {
+    typeReparation.findOne({ _id: req.body.typeReparation }, (err, typeReparation) => {
       if (err) {
         return res.status(500).send({ message: err });
       }
