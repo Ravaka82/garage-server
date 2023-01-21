@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-const TypeRepartition = mongoose.model(
-    "TypeRepartition",
+const TypeReparation = mongoose.model(
+    "TypeReparation",
     new mongoose.Schema({
         nomTypeReparation:{type: String},
         description: {type: String},
@@ -9,4 +9,4 @@ const TypeRepartition = mongoose.model(
     })
   );
   
-  module.exports = TypeRepartition;
+  module.exports = TypeReparation;
