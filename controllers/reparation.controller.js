@@ -56,6 +56,20 @@ exports.findDepotReparationParVoiture = (req, res) => { ///maka reparation par u
     }
   );
 };
+exports.findReparationById = (req, res) => { ///maka reparation par utilisateur et par voiture
+  console.log(req.params)
+  Reparation.find({ _id: req.params._id})
+  .populate(["typeReparation","vehicule"])
+  .exec((err, Reparation) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+    console.log(req.params)
+    res.send(Reparation);
+    }
+  );
+};
 exports.deleteReparation = (req, res) => {//delete reparation
   Reparation.deleteOne({ _id: req.params._id })
   .then(() => {
