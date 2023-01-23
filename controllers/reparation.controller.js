@@ -79,18 +79,24 @@ exports.deleteReparation = (req, res) => {//delete reparation
   res.status(500).send({ message: "Error deleting reparation" });
   });
 };
-exports.listeVehiculeDepot = (req, res) => { ///maka voiture rehetra natao depot ny utilisateur iray
-  console.log(req.params)
-   Reparation.find({ utilisateur: req.params.utilisateurId})
-  .populate(["vehicule"])
-   .distinct('vehicule')
-  .exec((err, Reparation) => {
-    if (err) {
-      res.status(500).send({ message: err });
-      return;
-    }
-    console.log(req.params)
-    res.send(Reparation);
-    }
-  );
+exports.listeVehiculeDepot = (req, res) => {
+  Reparation.find({ utilisateur: req.params.utilisateurId })
+    .populate({
+      path: "vehicule",
+      select: "nom"
+    })
+    .exec((err, reparations) => {
+      if (err) {
+        res.status(500).send({ message: err });
+        return;
+      }
+      const distinctVehicles = reparations.map(r => r.vehicule)//mcreer table vaovao hanasivana le valiny
+      .reduce((acc, curr) => {
+        if (!acc.some(vehicle => vehicle._id.equals(curr._id))) {//le array some mverifier anle element actuel hoe efa miexiste ve ao amle tableau final ref tsy miexsiste de atsofoka sinon tsy atsofoka ra ef miexiste
+          acc.push(curr);
+        }
+        return acc;
+      }, []);
+      res.send(distinctVehicles);
+    });
 };
