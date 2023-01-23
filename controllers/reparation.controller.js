@@ -42,7 +42,7 @@ exports.createReparation = (req, res) => {
     });
   });
 };
-exports.findDepotReparationParVoiture = (req, res) => { ///maka reparation par utilisateur et par voiture
+exports.findDepotReparationParVoiture = (req, res) => { ///maka reparation par utilisateur
   console.log(req.params)
   Reparation.find({ utilisateur: req.params.utilisateurId})
   .populate(["typeReparation","vehicule"])
@@ -56,7 +56,7 @@ exports.findDepotReparationParVoiture = (req, res) => { ///maka reparation par u
     }
   );
 };
-exports.findReparationById = (req, res) => { ///maka reparation par utilisateur et par voiture
+exports.findReparationById = (req, res) => { ///maka reparation par id
   console.log(req.params)
   Reparation.find({ _id: req.params._id})
   .populate(["typeReparation","vehicule"])
@@ -99,4 +99,17 @@ exports.listeVehiculeDepot = (req, res) => {
       }, []);
       res.send(distinctVehicles);
     });
+};
+exports.listeDepotVoitureParVoiture = (req,res)=>{//par voiture
+  Reparation.find({ utilisateur: req.params.utilisateurId , vehicule: req.params.vehicule })
+  .populate(["typeReparation","vehicule"])
+  .exec((err, Reparation) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+    console.log(req.params)
+    res.send(Reparation);
+    }
+  );
 };
