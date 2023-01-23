@@ -79,3 +79,18 @@ exports.deleteReparation = (req, res) => {//delete reparation
   res.status(500).send({ message: "Error deleting reparation" });
   });
 };
+exports.listeVehiculeDepot = (req, res) => { ///maka voiture rehetra natao depot ny utilisateur iray
+  console.log(req.params)
+   Reparation.find({ utilisateur: req.params.utilisateurId})
+  .populate(["vehicule"])
+   .distinct('vehicule')
+  .exec((err, Reparation) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+    console.log(req.params)
+    res.send(Reparation);
+    }
+  );
+};

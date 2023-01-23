@@ -6,4 +6,5 @@ module.exports = function(app) {
     app.get("/api/reparation/findDepotReparationParVoiture/:utilisateurId", controller.findDepotReparationParVoiture);
     app.delete("/api/reparation/deleteReparation/:_id", controller.deleteReparation);
     app.get("/api/reparation/findReparationById/:_id", controller.findReparationById);
+    app.get("/api/reparation/listeVehiculeDepot/:utilisateurId", controller.listeVehiculeDepot);
 }
