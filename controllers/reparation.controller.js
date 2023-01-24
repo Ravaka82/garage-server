@@ -79,24 +79,27 @@ exports.deleteReparation = (req, res) => {//delete reparation
   res.status(500).send({ message: "Error deleting reparation" });
   });
 };
-exports.listeVehiculeDepot = (req, res) => {
+exports.listeVehiculeDepot = (req, res) => {//liste vehicule reparer par utilisateur
   Reparation.find({ utilisateur: req.params.utilisateurId })
     .populate({
       path: "vehicule",
-      select: "nom image immatriculation type"
+      match: { utilisateur: req.params.utilisateurId },
+      select: "nom type image immatriculation"
     })
     .exec((err, reparations) => {
       if (err) {
         res.status(500).send({ message: err });
         return;
       }
-      const distinctVehicles = reparations.map(r => r.vehicule)//mcreer table vaovao hanasivana le valiny
-      .reduce((acc, curr) => {
-        if (!acc.some(vehicle => vehicle._id.equals(curr._id))) {//le array some mverifier anle element actuel hoe efa miexiste ve ao amle tableau final ref tsy miexsiste de atsofoka sinon tsy atsofoka ra ef miexiste
-          acc.push(curr);
-        }
-        return acc;
-      }, []);
+      const distinctVehicles = reparations
+        .filter(r => r.vehicule)
+        .map(r => r.vehicule)
+        .reduce((acc, curr) => {
+          if (!acc.some(vehicle => vehicle._id.equals(curr._id))) {
+            acc.push(curr);
+          }
+          return acc;
+        }, []);
       res.send(distinctVehicles);
     });
 };
