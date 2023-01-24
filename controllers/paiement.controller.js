@@ -42,3 +42,28 @@ exports.validerPaiement = (req, res) => {
       })
     })
   }
+
+  exports.accepterPaiement = (req, res) => { //  action ataon'ny responsable financier ivalidena anle paiement 
+    Vehicule.updateOne({ _id: req.body.vehicule }, {$set : {status: "valider"}}, (err, vehicule) => {
+      if (err) {
+        return res.status(500).send({ message: err });
+      }
+      if (!vehicule) {
+        return res.status(404).send({ message: "Vehicule not found" });
+      }
+          return res.send({ message: "Paiement Valider avec succes" });
+        });
+  };
+  exports.getAllPaiementValider = (req,res)=>{//par status "valider"
+    Paiement.find({})
+    .populate({
+        path: 'vehicule',
+        match: { status: 'valider' }
+    })
+    .exec((err, paiements) => {
+        if (err) {
+            return res.status(500).send({ message: err });
+        }
+        res.send(paiements);
+    });
+  };
