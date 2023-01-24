@@ -83,7 +83,7 @@ exports.listeVehiculeDepot = (req, res) => {//liste vehicule reparer par utilisa
   Reparation.find({ utilisateur: req.params.utilisateurId })
     .populate({
       path: "vehicule",
-      match: { utilisateur: req.params.utilisateurId },
+      match: { utilisateur: req.params.utilisateurId , status:"non valider"},
       select: "nom type image immatriculation"
     })
     .exec((err, reparations) => {
