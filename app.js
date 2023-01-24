@@ -103,6 +103,7 @@ require('./routes/role.routes')(app);
 require('./routes/vehicule.routes')(app);
 require('./routes/typeReparation.routes')(app);
 require('./routes/reparation.routes')(app);
+require('./routes/paiement.routes')(app);
 // Demarrage serveur
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
