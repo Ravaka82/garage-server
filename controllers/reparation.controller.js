@@ -116,3 +116,33 @@ exports.listeDepotVoitureParVoiture = (req,res)=>{//par voiture
     }
   );
 };
+exports.findVehiculeEnAttente = (req,res)=>{//liste vehicule statuts en attente
+  Reparation.find({ status:"en attente" })
+     .populate({
+      path:"typeReparation",
+      select: "nomTypeReparation"
+    })
+    .populate({
+      path: "vehicule",
+      populate: {path: "utilisateur"},
+      match: { status:"en attente"},
+      select: "nom type image immatriculation status totalPrixReparation utilisateur"
+    })
+
+    .exec((err, reparations) => {
+      if (err) {
+        res.status(500).send({ message: err });
+        return;
+      }
+      const distinctVehicles = reparations
+        .filter(r => r.vehicule)
+        .map(r => r.vehicule)
+        .reduce((acc, curr) => {
+          if (!acc.some(vehicle => vehicle._id.equals(curr._id))) {
+            acc.push(curr);
+          }
+          return acc;
+        }, []);
+      res.send(distinctVehicles);
+    });
+};
