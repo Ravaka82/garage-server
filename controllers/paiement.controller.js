@@ -42,28 +42,22 @@ exports.validerPaiement = (req, res) => {
       })
     })
   }
-
-  exports.accepterPaiement = (req, res) => { //  action ataon'ny responsable financier ivalidena anle paiement 
-    Vehicule.updateOne({ _id: req.body.vehicule }, {$set : {status: "valider"}}, (err, vehicule) => {
-      if (err) {
-        return res.status(500).send({ message: err });
-      }
-      if (!vehicule) {
-        return res.status(404).send({ message: "Vehicule not found" });
-      }
-          return res.send({ message: "Paiement Valider avec succes" });
-        });
-  };
-  exports.getAllPaiementValider = (req,res)=>{//par status "valider"
-    Paiement.find({})
-    .populate({
-        path: 'vehicule',
-        match: { status: 'valider' }
+exports.findVehiculeEnAttente = (req,res)=>{//liste vehicule statuts en attente
+  console.log(req.params)
+  Paiement.find({ status:"en attente"})
+  .populate({
+      path: "vehicule",
+      populate: {path: "utilisateur"},
+      match: { status:"en attente"},
+      select: "nom type image immatriculation status totalPrixReparation datePaiement utilisateur"
     })
-    .exec((err, paiements) => {
-        if (err) {
-            return res.status(500).send({ message: err });
-        }
-        res.send(paiements);
-    });
-  };
+  .exec((err, Paiement) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+    console.log(req.params)
+    res.send(Paiement);
+    }
+  );
+};
