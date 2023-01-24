@@ -51,13 +51,13 @@ exports.findVehiculeEnAttente = (req,res)=>{//liste vehicule statuts en attente
       match: { status:"en attente"},
       select: "nom type image immatriculation status totalPrixReparation datePaiement utilisateur"
     })
-  .exec((err, Paiement) => {
+  .exec((err, paiements) => {
     if (err) {
       res.status(500).send({ message: err });
       return;
     }
-    console.log(req.params)
-    res.send(Paiement);
+    const paiementsAttente = paiements.filter(paiement => paiement.vehicule !== null);
+    res.send(paiementsAttente);
     }
   );
 };
@@ -74,14 +74,16 @@ exports.accepterPaiement = (req, res) => { // ty no action ataon'ny responsable 
 };
 exports.getAllPaiementValider = (req,res)=>{//par status "en attente"
   Paiement.find({})
-  .populate({
-      path: 'vehicule',
-      match: { status: 'valide' }
-  })
-  .exec((err, paiements) => {
-      if (err) {
-          return res.status(500).send({ message: err });
-      }
-      res.send(paiements);
-  });
+      .populate({
+          path: 'vehicule',
+          match: { status: 'valide' }
+      })
+      .exec((err, paiements) => {
+          if (err) {
+              return res.status(500).send({ message: err });
+          }
+          // Only return the Paiement documents that have a 'valider' status vehicule
+          const paiementsValider = paiements.filter(paiement => paiement.vehicule !== null);
+          res.send(paiementsValider);
+      });
 };
