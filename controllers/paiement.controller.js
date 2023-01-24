@@ -62,7 +62,7 @@ exports.findVehiculeEnAttente = (req,res)=>{//liste vehicule statuts en attente
   );
 };
 exports.accepterPaiement = (req, res) => { // ty no action ataon'ny responsable financier ivalidena anle paiement ao am pageny
-  Vehicule.updateOne({ _id: req.body.vehicule }, {$set : {status: "valider"}}, (err, vehicule) => {
+  Vehicule.updateOne({ _id: req.body.vehicule }, {$set : {status: "valide"}}, (err, vehicule) => {
     if (err) {
       return res.status(500).send({ message: err });
     }
@@ -76,7 +76,7 @@ exports.getAllPaiementValider = (req,res)=>{//par status "en attente"
   Paiement.find({})
   .populate({
       path: 'vehicule',
-      match: { status: 'valider' }
+      match: { status: 'valide' }
   })
   .exec((err, paiements) => {
       if (err) {
