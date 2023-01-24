@@ -8,5 +8,5 @@ module.exports = function(app) {
     app.get("/api/reparation/findReparationById/:_id", controller.findReparationById);
     app.get("/api/reparation/listeVehiculeDepot/:utilisateurId", controller.listeVehiculeDepot);
     app.get("/api/reparation/listeDepotVoitureParVoiture/:utilisateur/:vehicule", controller.listeDepotVoitureParVoiture);
-     app.get("/api/reparation/findVehiculeEnAttente", controller.findVehiculeEnAttente);
+    app.get("/api/reparation/getReparationParVehicule/:vehicule", controller.getReparationParVehicule);
 }

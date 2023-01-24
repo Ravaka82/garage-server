@@ -42,3 +42,22 @@ exports.validerPaiement = (req, res) => {
       })
     })
   }
+exports.findVehiculeEnAttente = (req,res)=>{//liste vehicule statuts en attente
+  console.log(req.params)
+  Paiement.find({ status:"en attente"})
+  .populate({
+      path: "vehicule",
+      populate: {path: "utilisateur"},
+      match: { status:"en attente"},
+      select: "nom type image immatriculation status totalPrixReparation datePaiement utilisateur"
+    })
+  .exec((err, Paiement) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+    console.log(req.params)
+    res.send(Paiement);
+    }
+  );
+};
