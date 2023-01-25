@@ -64,4 +64,16 @@ exports.findVoitureValide = (req, res) => { ///maka voiture rehetra client izay 
       }
     )
   }
-  
+exports.findVehiculeReparationPayer = (req,res)=>{//listes voitures rehetra izay valider paiement
+  Vehicule.find({ status: 'valide' })
+  .populate(["utilisateur"])
+  .exec((err, Vehicule) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+    console.log(req.params)
+    res.send(Vehicule);
+    }
+  );
+};
