@@ -118,7 +118,12 @@ exports.listeDepotVoitureParVoiture = (req,res)=>{//par voiture
 };
 exports.getReparationParVehicule= (req,res)=>{//les reparations par vehicule
   Reparation.find({ vehicule: req.params.vehicule })
-  .populate(["typeReparation","vehicule"])
+  .populate("typeReparation")
+  .populate({
+    path: 'vehicule',
+    populate: {path: "utilisateur"},
+    match: { status: 'valide' }
+})
   .exec((err, Reparation) => {
     if (err) {
       res.status(500).send({ message: err });

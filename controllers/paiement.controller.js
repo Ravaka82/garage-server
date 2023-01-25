@@ -76,6 +76,7 @@ exports.getAllPaiementValider = (req,res)=>{//par status "en attente"
   Paiement.find({})
       .populate({
           path: 'vehicule',
+          populate: {path: "utilisateur"},
           match: { status: 'valide' }
       })
       .exec((err, paiements) => {
