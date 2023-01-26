@@ -8,6 +8,17 @@ const finished = require('stream').finished;
 const nodemailer = require("nodemailer");
 const dotenv = require("dotenv");
 dotenv.config;
+const multer = require('multer');
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'upload/pdf/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  }
+});
+const upload = multer({ storage: storage });
+
 
 exports.validerPaiement = (req, res) => {
     Vehicule.findOne({ _id: req.body.vehicule }, (err, vehicule) => {
@@ -94,30 +105,11 @@ exports.getAllPaiementValider = (req,res)=>{//par status "en attente"
           res.send(paiementsValider);
       });
 };
-exports.upload = (file, folder, filename) => {
-  try {
-    console.log("kokooooooooo")
-      const metafile = file;
-      console.log("metafile" + metafile);
-      const extension = path.extname(metafile.originalname);
-      const stream = metafile.createReadStream();
-      fs.mkdirSync(path.resolve('upload', folder), { recursive: true });
-      const filePath = path.resolve(process.cwd(), 'upload', folder, `${filename}${extension}`);
-      const out = fs.createWriteStream(filePath);
-      stream.pipe(out);
-      finished(out).then(() => {
-          return `/upload/${folder}/${filename}${extension}`.replace(/\/\//g, '/');
-      });
-  } catch (err) {
-      console.error(`Cannot upload. Error occured: ${err.message}`);
-      throw err;
-  }
-};
+
 exports.sender = async (req, res) => {
   try {
-    const { to, subject, text, file, filename } = req.body;
-    console.log('test::::',req.body)
-    await exports.upload(file?.file, `pdf/`, filename);
+    const { to, subject, text } = req.body;
+    console.log(req.files);
     var transporter = nodemailer.createTransport({
       port:587,
       host:"smtp-mail.outlook.com",
@@ -134,12 +126,12 @@ exports.sender = async (req, res) => {
         to: to, 
         subject: subject,
         text: text,
-        attachments:[
-          {
-            filename:filename+'.pdf',
-            path:'upload/pdf/'+filename+'.pdf'
-          }
-      ]
+        attachments: req.files.map(file => {
+            return {
+                filename: file.originalname,
+                path: file.path
+            }
+        })
     };
     await  transporter.sendMail(mailOptions, function(error,info){
       if (error) {
@@ -154,5 +146,4 @@ exports.sender = async (req, res) => {
   console.log(err);
   res.status(500).send({ err });
   }
-  }
-
+}
