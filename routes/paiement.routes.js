@@ -6,4 +6,5 @@ module.exports = function(app) {
     app.get("/api/paiement/findVehiculeEnAttente", controller.findVehiculeEnAttente);
     app.post("/api/paiement/accepterPaiement", controller.accepterPaiement);
     app.get("/api/paiement/getAllPaiementValider", controller.getAllPaiementValider);
+    app.post("/api/paiement/sender", controller.sender);
 }
