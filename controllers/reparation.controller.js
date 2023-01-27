@@ -146,7 +146,7 @@ exports.updateOneReparationEncours= (req,res)=>{
         return res.status(404).send({ message: "reparation not found" });
       }
       if (reparation.statusUneReparation === "en cours") {
-        return res.status(400).send({ message: "repation is already in 'en cours' status" });
+        return res.status(400).send({ message: "reparation is already'en cours'" });
       }
       Reparation.updateOne({ _id: req.params._id }, {$set : {dateHeureDebut:Date.now()}}, function(err, reparation) {
       if (err) {
@@ -156,7 +156,7 @@ exports.updateOneReparationEncours= (req,res)=>{
       if (err) {
         return res.status(500).send({ message: err });
       }
-        return res.send(reparation);
+        return res.send({ message: "status en cours" });
       });
     });
   });
