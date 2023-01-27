@@ -145,7 +145,7 @@ exports.updateOneReparationEncours= (req,res)=>{
       if (!reparation) {
         return res.status(404).send({ message: "reparation not found" });
       }
-      if (reparation.statusUneReparation === "en cours") {
+      if (reparation.statusUneReparation==="en cours") {
         return res.status(400).send({ message: "reparation is already'en cours'" });
       }
       Reparation.updateOne({ _id: req.params._id }, {$set : {dateHeureDebut:Date.now()}}, function(err, reparation) {
@@ -160,4 +160,40 @@ exports.updateOneReparationEncours= (req,res)=>{
       });
     });
   });
+};
+exports.getReparationAFaire= (req,res)=>{//les reparations par vehicule
+  Reparation.find({ vehicule: req.params.vehicule,statusUneReparation: "à faire"})
+  .populate("typeReparation")
+  .populate({
+    path: 'vehicule',
+    populate: {path: "utilisateur"},
+    match: { status: 'valide' }
+})
+  .exec((err, Reparation) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+    console.log(req.params)
+    res.send(Reparation);
+    }
+  );
+};
+exports.getReparationEnCours= (req,res)=>{//les reparations par vehicule
+  Reparation.find({ vehicule: req.params.vehicule,statusUneReparation: "en cours"})
+  .populate("typeReparation")
+  .populate({
+    path: 'vehicule',
+    populate: {path: "utilisateur"},
+    match: { status: 'valide' }
+})
+  .exec((err, Reparation) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+    console.log(req.params)
+    res.send(Reparation);
+    }
+  );
 };
