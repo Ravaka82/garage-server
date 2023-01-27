@@ -4,7 +4,7 @@ const Reparation = mongoose.model(
     new mongoose.Schema({
         dateHeureDebut: {type: Date,default: 0},
         dateHeureFin: {type: Date,default: 0},
-        tempsReparation: {type: Date,default: 0},
+        tempsReparation: {type:String,default:""},
         statusUneReparation: {type: Boolean, default:false},
         typeReparation: { type: mongoose.Schema.Types.ObjectId, ref: 'TypeReparation' },
         vehicule: { type: mongoose.Schema.Types.ObjectId, ref: 'Vehicule' },

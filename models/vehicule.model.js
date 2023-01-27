@@ -9,7 +9,7 @@ const Vehicule = mongoose.model(
         dateDebut: {type: Date, default: Date.now},
         DateHeureDebut: {type: Date, default: 0},
         DateHeureFin: {type: Date, default: 0},
-        totalTempsReparation: {type: Date, default:0},
+        totalTempsReparation: {type: String, default:""},
         totalPrixReparation: {type: Number, default: 0},
         status : {type: String, default: "non valider"},
         utilisateur: { type: mongoose.Schema.Types.ObjectId, ref: 'Utilisateur' }
