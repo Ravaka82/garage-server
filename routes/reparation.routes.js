@@ -10,8 +10,8 @@ module.exports = function(app) {
     app.get("/api/reparation/listeDepotVoitureParVoiture/:utilisateur/:vehicule", controller.listeDepotVoitureParVoiture);
     app.get("/api/reparation/getReparationParVehicule/:vehicule", controller.getReparationParVehicule);
     app.post("/api/reparation/updateOneReparationEncours/:_id", controller.updateOneReparationEncours);
-    app.get("/api/reparation/updateOneReparationTerminée/:vehicule", controller.updateOneReparationTerminée);
+    app.post("/api/reparation/updateOneReparationTerminee/:_id", controller.updateOneReparationTerminee);
     app.get("/api/reparation/getReparationAFaire/:vehicule", controller.getReparationAFaire);
     app.get("/api/reparation/getReparationEnCours/:vehicule", controller.getReparationEnCours);
-    app.get("/api/reparation/getReparationTerminée/:vehicule", controller.getReparationTerminée);
+    app.get("/api/reparation/getReparationTerminee/:vehicule", controller.getReparationTerminee);
 }

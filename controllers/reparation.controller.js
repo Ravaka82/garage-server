@@ -161,29 +161,29 @@ exports.updateOneReparationEncours= (req,res)=>{
     });
   });
 };
-exports.updateOneReparationTerminée=(req,res)=>{
+exports.updateOneReparationTerminee=(req,res)=>{
   Reparation.find({ _id: req.params._id }, (err, reparation) => {
-    if (err) {
-      return res.status(500).send({ message: err });
-    }
-    console.log( req.params._id)
-    if (!reparation) {
-      return res.status(404).send({ message: "reparation not found" });
-    }
-    if (reparation.statusUneReparation==="terminée") {
-      return res.status(400).send({ message: "reparation is already'terminée'" });
-    }
-    Reparation.updateOne({ _id: req.params._id }, {$set : {dateHeureFin:Date.now()}}, function(err, reparation) {
-    if (err) {
-      return res.status(500).send({ message: err });
-    }
-    Reparation.updateOne({ _id: req.params._id }, {$set : {statusUneReparation:"terminée"}}, (err, reparation) => {
-    if (err) {
-      return res.status(500).send({ message: err });
-    }
-      return res.send({ message: "status terminée" });
+      if (err) {
+        return res.status(500).send({ message: err });
+      }
+      console.log( req.params._id)
+      if (!reparation) {
+        return res.status(404).send({ message: "reparation not found" });
+      }
+      if (reparation.statusUneReparation==="terminee") {
+        return res.status(400).send({ message: "reparation is already'terminee'" });
+      }
+      Reparation.updateOne({ _id: req.params._id }, {$set : {dateHeureFin:Date.now()}}, function(err, reparation) {
+      if (err) {
+        return res.status(500).send({ message: err });
+      }
+      Reparation.updateOne({ _id: req.params._id }, {$set : {statusUneReparation:"terminee"}}, (err, reparation) => {
+      if (err) {
+        return res.status(500).send({ message: err });
+      }
+        return res.send({ message: "status terminée" });
+      });
     });
-  });
 });
 };
 exports.getReparationAFaire= (req,res)=>{//les reparations par vehicule
@@ -222,8 +222,8 @@ exports.getReparationEnCours= (req,res)=>{//les reparations par vehicule
     }
   );
 };
-exports.getReparationTerminée= (req,res)=>{//les reparations par vehicule
-  Reparation.find({ vehicule: req.params.vehicule,statusUneReparation: "terminée"})
+exports.getReparationTerminee= (req,res)=>{//les reparations par vehicule
+  Reparation.find({ vehicule: req.params.vehicule,statusUneReparation: "terminee"})
   .populate("typeReparation")
   .populate({
     path: 'vehicule',
