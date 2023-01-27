@@ -197,3 +197,21 @@ exports.getReparationEnCours= (req,res)=>{//les reparations par vehicule
     }
   );
 };
+exports.getReparationTerminée= (req,res)=>{//les reparations par vehicule
+  Reparation.find({ vehicule: req.params.vehicule,statusUneReparation: "terminée"})
+  .populate("typeReparation")
+  .populate({
+    path: 'vehicule',
+    populate: {path: "utilisateur"},
+    match: { status: 'valide' }
+})
+  .exec((err, Reparation) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+    console.log(req.params)
+    res.send(Reparation);
+    }
+  );
+};
