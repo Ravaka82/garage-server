@@ -26,7 +26,9 @@ exports.createReparation = (req, res) => {
       }
 //dia miinsert amzay efveo 
       const newReparation = new Reparation({
-        avancement: req.body.avancement,
+        dateHeureDebut: req.body.dateHeureDebut,
+        dateHeureFin: req.body.dateHeureFin,
+        tempsReparation: req.body.statusUneReparation,
         statusUneReparation : req.body.statusUneReparation,
         vehicule: vehicule._id,
         typeReparation: typeReparation._id,

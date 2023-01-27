@@ -22,7 +22,9 @@ exports.createVehicule = (req, res) => {//insertion un vehicule d'un utilisateur
       image: req.body.image,
       immatriculation: req.body.immatriculation,
       dateDebut: req.body.dateDebut,
-      totalAvancement: req.body.totalAvancement,
+      DateHeureDebut: req.body.DateHeureDebut,
+      DateHeureFin: req.body.DateHeureFin,
+      totalTempsReparation: req.body.totalTempsReparation,
       totalPrixReparation: req.body.totalPrixReparation,
       status: req.body.status,
       utilisateur: utilisateur._id///ty le id anle utilisateur le taflogy
