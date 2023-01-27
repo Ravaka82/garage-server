@@ -161,6 +161,31 @@ exports.updateOneReparationEncours= (req,res)=>{
     });
   });
 };
+exports.updateOneReparationTerminée=(req,res)=>{
+  Reparation.find({ _id: req.params._id }, (err, reparation) => {
+    if (err) {
+      return res.status(500).send({ message: err });
+    }
+    console.log( req.params._id)
+    if (!reparation) {
+      return res.status(404).send({ message: "reparation not found" });
+    }
+    if (reparation.statusUneReparation==="terminée") {
+      return res.status(400).send({ message: "reparation is already'terminée'" });
+    }
+    Reparation.updateOne({ _id: req.params._id }, {$set : {dateHeureFin:Date.now()}}, function(err, reparation) {
+    if (err) {
+      return res.status(500).send({ message: err });
+    }
+    Reparation.updateOne({ _id: req.params._id }, {$set : {statusUneReparation:"terminée"}}, (err, reparation) => {
+    if (err) {
+      return res.status(500).send({ message: err });
+    }
+      return res.send({ message: "status terminée" });
+    });
+  });
+});
+};
 exports.getReparationAFaire= (req,res)=>{//les reparations par vehicule
   Reparation.find({ vehicule: req.params.vehicule,statusUneReparation: "à faire"})
   .populate("typeReparation")
