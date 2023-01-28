@@ -182,14 +182,19 @@ exports.updateOneReparationTerminee = (req, res) => {
         if (err) {
           return res.status(500).send({ message: err });
         }
-      const dateHeureDebut = moment(reparation.dateHeureDebut);
-      const dateHeureFinished = moment(dateHeureFin);
-      const duration = moment.duration(dateHeureFinished.diff(dateHeureDebut));
-     
-      const diffDays = duration.days(); 
-      const diffhours = duration.hours(); 
-      const diffminutes = duration.minutes(); 
-      const diffseconds = duration.seconds(); 
+        const dateHeureDebut = moment(updatedReparation.dateHeureDebut, "DD/MM/YYYY HH:mm:ss").toDate();
+        const dateHeureFins = moment(dateHeureFin, "DD/MM/YYYY HH:mm:ss").toDate();
+        
+        const duration = dateHeureFins - dateHeureDebut;      
+        
+        console.log(dateHeureDebut)
+        console.log(dateHeureFins)  
+        console.log(duration)      
+       
+        const diffDays = Math.floor(duration / (1000 * 60 * 60 * 24)); 
+        const diffhours = Math.floor((duration % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)); 
+        const diffminutes = Math.floor((duration % (1000 * 60 * 60)) / (1000 * 60)); 
+        const diffseconds = Math.floor((duration % (1000 * 60)) / 1000); 
   
       // update tempsReparation
       Reparation.updateOne({ _id: req.params._id }, { $set: { tempsReparation:diffDays+"j,"+diffhours+"h,"+diffminutes+"mn,"+diffseconds+"s" } }, (err) => {
