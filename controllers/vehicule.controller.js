@@ -90,3 +90,20 @@ exports.findVoitureTerminee = (req, res) => { ///maka voiture rehetra client iza
     }
   ).populate("utilisateur")
 }
+exports.updateStatusVehicule= (req,res)=>{
+  Vehicule.find({ _id: req.params._id }, (err, vehicule) => {
+    if (err) {
+      return res.status(500).send({ message: err });
+    }
+    console.log( req.params._id)
+    if (!vehicule) {
+      return res.status(404).send({ message: "vehicule not found" });
+    }
+    Vehicule.updateOne({ _id: req.params._id }, {$set :{ status:"sortie valider"}}, function(err, reparation) {
+    if (err) {
+      return res.status(500).send({ message: err });
+    }
+      return res.send({ message: "sortie valider" });
+  });
+});
+};
