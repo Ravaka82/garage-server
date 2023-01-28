@@ -284,3 +284,54 @@ exports.getReparationavancement= (req,res)=>{//les reparations avec les avanceme
     }
   );
 };
+const addRepairTime = (time1, time2) => {
+  const time1Arr = time1.split(",");
+  const time2Arr = time2.split(",");
+  let days = parseInt(time1Arr[0].slice(0, -1)) + parseInt(time2Arr[0].slice(0, -1));
+  let hours = parseInt(time1Arr[1].slice(0, -1)) + parseInt(time2Arr[1].slice(0, -1));
+  let minutes = parseInt(time1Arr[2].slice(0, -2)) + parseInt(time2Arr[2].slice(0, -2));
+  let seconds = parseInt(time1Arr[3]) + parseInt(time2Arr[3]);
+  while (seconds >= 60) {
+      seconds -= 60;
+      minutes++;
+  }
+  while (minutes >= 60) {
+      minutes -= 60;
+      hours++;
+  }
+  while (hours >= 24) {
+      hours -= 24;
+      days++;
+  }
+  console.log(`${days}j,${hours}h,${minutes}mn,${seconds}s`)
+  return `${days}j,${hours}h,${minutes}mn,${seconds}s`;
+};
+exports.updateVehiculeTerminee = (req, res) => {
+    try {
+        Reparation.find({vehicule: req.params.vehicule}, (err, repairList) => {
+            if (err) {
+                return res.status(500).send({ message: err });
+            }
+            console.log(req.params)
+            let totalRepairTime = "0j,0h,0mn,0s";
+            repairList.forEach(repair => {
+                totalRepairTime = addRepairTime(totalRepairTime,repair.tempsReparation);
+            });
+            const dateHeureFin = new Date().toLocaleString("fr-FR", {timeZone: "Indian/Antananarivo"});
+            vehicule.updateOne({ _id: req.params.vehicule }, { $set: { DateHeureFin: dateHeureFin } }, function (err) {
+              if (err) {
+                return res.status(500).send({ message: err });
+              }
+            });
+            console.log("totalTempsReparation:"+totalRepairTime)
+            vehicule.updateOne({ _id: req.params.vehicule }, { $set: {  totalTempsReparation: totalRepairTime } }, (err) => {
+              if (err) {
+                return res.status(500).send({ message: err });
+              }
+              res.send({ message: "Vehicule updated successfully" });
+            });
+        });
+    } catch (error) {
+        res.status(500).send(error);
+    }
+};

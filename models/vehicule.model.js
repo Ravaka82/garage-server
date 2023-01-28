@@ -8,13 +8,12 @@ const Vehicule = mongoose.model(
         image : {type: String},
         immatriculation : {type: String, required: true},
         dateDebut: {type: String, default: new Date().toLocaleString("fr-FR", {timeZone: "Indian/Antananarivo"})},
-        DateHeureDebut: {type: Date, default: null},
-        DateHeureFin: {type: Date, default: null},
+        DateHeureDebut: {type: String, default: ""},
+        DateHeureFin: {type: String, default: ""},
         totalTempsReparation: {type: String, default:""},
         totalPrixReparation: {type: Number, default: 0},
         status : {type: String, default: "non valider"},
         utilisateur: { type: mongoose.Schema.Types.ObjectId, ref: 'Utilisateur' }
     })
   );
-  
   module.exports = Vehicule;
