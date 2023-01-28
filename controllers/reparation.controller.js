@@ -3,7 +3,7 @@ const db = require("../models");
 const Reparation = db.reparation;
 const vehicule = db.vehicule;
 const typeReparation = db.typeReparation;
-
+const moment = require('moment-timezone');
 exports.createReparation = (req, res) => {
   //maka id anle vehicule kalo ra efa miexsiste ao 
   vehicule.findOne({ _id: req.body.vehicule }, (err, vehicule) => {
@@ -148,7 +148,7 @@ exports.updateOneReparationEncours= (req,res)=>{
       if (reparation.statusUneReparation==="en cours") {
         return res.status(400).send({ message: "reparation is already'en cours'" });
       }
-      Reparation.updateOne({ _id: req.params._id }, {$set : {dateHeureDebut:Date.now()}}, function(err, reparation) {
+      Reparation.updateOne({ _id: req.params._id }, {$set : {dateHeureDebut:new Date().toLocaleString("fr-FR", {timeZone: "Indian/Antananarivo"})}}, function(err, reparation) {
       if (err) {
         return res.status(500).send({ message: err });
       }
@@ -161,31 +161,52 @@ exports.updateOneReparationEncours= (req,res)=>{
     });
   });
 };
-exports.updateOneReparationTerminee=(req,res)=>{
-  Reparation.find({ _id: req.params._id }, (err, reparation) => {
+exports.updateOneReparationTerminee = (req, res) => {
+    Reparation.findOne({ _id: req.params._id }, (err, reparation) => {
       if (err) {
         return res.status(500).send({ message: err });
       }
-      console.log( req.params._id)
       if (!reparation) {
-        return res.status(404).send({ message: "reparation not found" });
+        return res.status(404).send({ message: "Reparation not found" });
       }
-      if (reparation.statusUneReparation==="terminee") {
-        return res.status(400).send({ message: "reparation is already'terminee'" });
+      if (reparation.statusUneReparation === "terminee") {
+        return res.status(400).send({ message: "Reparation is already 'terminee'" });
       }
-      Reparation.updateOne({ _id: req.params._id }, {$set : {dateHeureFin:Date.now()}}, function(err, reparation) {
-      if (err) {
-        return res.status(500).send({ message: err });
-      }
-      Reparation.updateOne({ _id: req.params._id }, {$set : {statusUneReparation:"terminee"}}, (err, reparation) => {
-      if (err) {
-        return res.status(500).send({ message: err });
-      }
-        return res.send({ message: "status terminée" });
+      const dateHeureFin = new Date().toLocaleString("fr-FR", {timeZone: "Indian/Antananarivo"});
+      Reparation.updateOne({ _id: req.params._id }, { $set: { dateHeureFin } }, function (err) {
+        if (err) {
+          return res.status(500).send({ message: err });
+        }
+      });
+      Reparation.findOne({ _id: req.params._id }, (err, updatedReparation) => {
+        if (err) {
+          return res.status(500).send({ message: err });
+        }
+      const dateHeureDebut = moment(reparation.dateHeureDebut);
+      const dateHeureFinished = moment(dateHeureFin);
+      const duration = moment.duration(dateHeureFinished.diff(dateHeureDebut));
+     
+      const diffDays = duration.days(); 
+      const diffhours = duration.hours(); 
+      const diffminutes = duration.minutes(); 
+      const diffseconds = duration.seconds(); 
+  
+      // update tempsReparation
+      Reparation.updateOne({ _id: req.params._id }, { $set: { tempsReparation:diffDays+"j,"+diffhours+"h,"+diffminutes+"mn,"+diffseconds+"s" } }, (err) => {
+        if (err) {
+          return res.status(500).send({ message: err });
+        }
+        Reparation.updateOne({ _id: req.params._id }, { $set: { statusUneReparation: "terminee" } }, (err) => {
+          if (err) {
+            return res.status(500).send({ message: err });
+          }
+          return res.send({ message: "status terminée" });
+        });
+        });
       });
     });
-});
-};
+  };
+
 exports.getReparationAFaire= (req,res)=>{//les reparations par vehicule
   Reparation.find({ vehicule: req.params.vehicule,statusUneReparation: "à faire"})
   .populate("typeReparation")

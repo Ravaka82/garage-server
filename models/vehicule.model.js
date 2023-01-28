@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const moment = require('moment-timezone');
 const Vehicule = mongoose.model(
     "Vehicule",
     new mongoose.Schema({
@@ -6,9 +7,9 @@ const Vehicule = mongoose.model(
         type : {type: String, required: true},
         image : {type: String},
         immatriculation : {type: String, required: true},
-        dateDebut: {type: Date, default: Date.now},
-        DateHeureDebut: {type: Date, default: 0},
-        DateHeureFin: {type: Date, default: 0},
+        dateDebut: {type: String, default: new Date().toLocaleString("fr-FR", {timeZone: "Indian/Antananarivo"})},
+        DateHeureDebut: {type: Date, default: null},
+        DateHeureFin: {type: Date, default: null},
         totalTempsReparation: {type: String, default:""},
         totalPrixReparation: {type: Number, default: 0},
         status : {type: String, default: "non valider"},
