@@ -323,6 +323,12 @@ exports.updateVehiculeTerminee = (req, res) => {
                 return res.status(500).send({ message: err });
               }
             });
+            const Status = "terminee";
+            vehicule.updateOne({ _id: req.params.vehicule }, { $set: { status: Status } }, function (err) {
+              if (err) {
+                return res.status(500).send({ message: err });
+              }
+            });
             console.log("totalTempsReparation:"+totalRepairTime)
             vehicule.updateOne({ _id: req.params.vehicule }, { $set: {  totalTempsReparation: totalRepairTime } }, (err) => {
               if (err) {
@@ -353,3 +359,22 @@ exports.getFactureReparationParVoiture= (req,res)=>{//mamoaka facture an ilay re
     }
   );
 };
+exports.getBondeSortieParVoiture= (req,res)=>{
+  Reparation.find({ utilisateur: req.params.utilisateurId,vehicule: req.params.vehicule })
+  .populate("typeReparation")
+  .populate({
+    path: 'vehicule',
+    populate: {path: "utilisateur"},
+    match: { status: 'terminee' }
+})
+  .exec((err, Reparation) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+    console.log(req.params)
+    res.send(Reparation);
+    }
+  );
+};
+

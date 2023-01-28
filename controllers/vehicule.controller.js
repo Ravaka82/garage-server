@@ -78,3 +78,15 @@ exports.findVehiculeReparationPayer = (req,res)=>{//listes voitures rehetra izay
     }
   );
 };
+exports.findVoitureTerminee = (req, res) => { ///maka voiture rehetra client izay status valide
+  console.log(req.params)
+  Vehicule.find({ status: 'terminee' },
+    (err, Vehicule) => {
+      if (err) {
+        res.status(500).send({ message: err });
+        return;
+      }
+      res.send(Vehicule);
+    }
+  ).populate("utilisateur")
+}

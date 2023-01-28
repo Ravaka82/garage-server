@@ -6,4 +6,5 @@ module.exports = function(app) {
     app.get("/api/vehicule/findVoitureClient/:utilisateurId", controller.findVoitureClient);
     app.get("/api/vehicule/findVoitureValide/:utilisateurId", controller.findVoitureValide);
     app.get("/api/vehicule/findVehiculeReparationPayer", controller.findVehiculeReparationPayer);
+    app.get("/api/vehicule/findVoitureTerminee", controller.findVoitureTerminee);
 }
