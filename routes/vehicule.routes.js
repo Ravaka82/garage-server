@@ -11,4 +11,5 @@ module.exports = function(app) {
     app.get("/api/vehicule/findVoitureBondeSortieValider",controller.findVoitureBondeSortieValider);
     app.get("/api/vehicule/findVehiculeRecuperer/:utilisateurId",controller.findVehiculeRecuperer);
     app.post("/api/vehicule/updateStatusVehiculeRecuperer/:_id",controller.updateStatusVehiculeRecuperer);
+    app.get("/api/vehicule/findHistoriqueVehicule/:utilisateurId",controller.findHistoriqueVehicule);
 }
