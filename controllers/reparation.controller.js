@@ -377,4 +377,21 @@ exports.getBondeSortieParVoiture= (req,res)=>{
     }
   );
 };
-
+exports.getHistoriqueReparation= (req,res)=>{//les reparations par vehicule historiques
+  Reparation.find({ utilisateur: req.params.utilisateurId,vehicule: req.params.vehicule,statusUneReparation: "terminee"})
+  .populate("typeReparation")
+  .populate({
+    path: 'vehicule',
+    populate: {path: "utilisateur"},
+    match: { status: 'recuperer' }
+})
+  .exec((err, Reparation) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+    console.log(req.params)
+    res.send(Reparation);
+    }
+  );
+};

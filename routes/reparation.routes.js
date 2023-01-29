@@ -19,4 +19,5 @@ module.exports = function(app) {
     app.post("/api/reparation/updateVehiculeTerminee/:vehicule", controller.updateVehiculeTerminee);
     app.get("/api/reparation/getFactureReparationParVoiture/:utilisateur/:vehicule", controller.getFactureReparationParVoiture);
     app.get("/api/reparation/getBondeSortieParVoiture/:utilisateur/:vehicule", controller.getBondeSortieParVoiture);
+    
 }
