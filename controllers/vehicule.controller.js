@@ -12,10 +12,11 @@ const storage = multer.diskStorage({
   }
 })
 const upload = multer({ storage: storage })
-
 exports.createVehicule = (req, res) => {
   try{
-  utilisateur.findOne({ _id: req.params.utilisateurId }, (err, utilisateur) => {
+    const utilisateurId = req.body.utilisateurId;
+    console.log(utilisateurId)
+  utilisateur.findOne({ _id: utilisateurId }, (err, utilisateur) => {
     if (err) {
       res.status(500).send({ message: err });
       return;
@@ -25,21 +26,19 @@ exports.createVehicule = (req, res) => {
       return;
     }
 
-    console.log("vehicule "+req.body);
-;
+    if (!req.file) {
+      res.status(400).send({ message: "No file provided" });
+      return;
+    }
 
     const car = new Vehicule({
       nom: req.body.nom,
       type: req.body.type,
       image: req.file.originalname,
       immatriculation: req.body.immatriculation,
-      dateDebut: req.body.dateDebut,
-      DateHeureFin: req.body.DateHeureFin,
-      totalTempsReparation: req.body.totalTempsReparation,
-      totalPrixReparation: req.body.totalPrixReparation,
-      status: req.body.status,
       utilisateur: utilisateur._id
     });
+    console.log(car)
     car.save((err, vehicule) => {
       if (err) {
         res.status(500).send({ message: err });

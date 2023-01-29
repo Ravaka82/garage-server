@@ -1,8 +1,9 @@
 const controller = require("../controllers/vehicule.controller");
 var bodyParser = require('body-parser');
-
+const multer = require("multer");
+var upload = multer({ dest: 'images/' });
 module.exports = function(app) {
-    app.post("/api/vehicule/createVehicule", controller.createVehicule);
+    app.post("/api/vehicule/createVehicule", upload.single('image'), controller.createVehicule);
     app.get("/api/vehicule/findVoitureClient/:utilisateurId", controller.findVoitureClient);
     app.get("/api/vehicule/findVoitureValide/:utilisateurId", controller.findVoitureValide);
     app.get("/api/vehicule/findVehiculeReparationPayer", controller.findVehiculeReparationPayer);
