@@ -1,6 +1,7 @@
 const controller = require("../controllers/vehicule.controller");
 var bodyParser = require('body-parser');
 const multer = require("multer");
+const path = require("path");
 var upload = multer({ dest: 'images/' });
 module.exports = function(app) {
     app.post("/api/vehicule/createVehicule", upload.single('image'), controller.createVehicule);
@@ -13,4 +14,10 @@ module.exports = function(app) {
     app.get("/api/vehicule/findVehiculeRecuperer/:utilisateurId",controller.findVehiculeRecuperer);
     app.post("/api/vehicule/updateStatusVehiculeRecuperer/:_id",controller.updateStatusVehiculeRecuperer);
     app.get("/api/vehicule/findHistoriqueVehicule/:utilisateurId",controller.findHistoriqueVehicule);
+    app.get('/images/:imageName', (req, res) => {
+        const imageName = req.params.imageName;
+        const imagePath = path.join(__dirname,'..','images', imageName);
+        res.sendFile(imagePath);
+        console.log(imagePath)
+    });
 }

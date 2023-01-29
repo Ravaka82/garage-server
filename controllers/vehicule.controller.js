@@ -2,16 +2,25 @@ const config = require("../config/auth.config");
 const db = require("../models");
 const Vehicule = db.vehicule;
 const utilisateur = db.utilisateur;
-const multer = require('multer');
+const multer = require("multer");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'images/')
+    cb(null, "images/");
   },
   filename: function (req, file, cb) {
-    cb(null, file.originalname)
+    // récupération de l'extension à partir du type MIME
+    let extension = file.mimetype.split("/")[1];
+    // récupération du nom de fichier stocké dans la base de données
+    let fileName = req.body.fileName;
+    cb(null, fileName + "." + extension);
   }
-})
-const upload = multer({ storage: storage })
+});
+const upload = multer({ storage: storage });
+
+// route to serve images
+
+
+
 exports.createVehicule = (req, res) => {
   try{
     const utilisateurId = req.body.utilisateurId;
