@@ -145,3 +145,21 @@ exports.findVehiculeRecuperer = (req, res) => { ///maka voiture rehetra client i
     }
   ).populate("utilisateur")
 }
+exports.updateStatusVehiculeRecuperer= (req,res)=>{ //manova status anle vehicule sy miinsert historique
+  Vehicule.find({ _id: req.params._id }, (err, vehicule) => {
+    if (err) {
+      return res.status(500).send({ message: err });
+    }
+    console.log( req.params._id)
+    if (!vehicule) {
+      return res.status(404).send({ message: "vehicule not found" });
+    }
+    
+    Vehicule.updateOne({ _id: req.params._id }, {$set :{ status:"recuperer"}}, function(err, vehicule) {
+    if (err) {
+      return res.status(500).send({ message: err });
+    }
+      return res.send({ message: "recuperer" });
+  });
+});
+};
