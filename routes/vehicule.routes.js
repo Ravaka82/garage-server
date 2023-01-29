@@ -9,4 +9,5 @@ module.exports = function(app) {
     app.get("/api/vehicule/findVoitureTerminee", controller.findVoitureTerminee);
     app.post("/api/vehicule/updateStatusVehicule/:_id", controller.updateStatusVehicule);
     app.get("/api/vehicule/findVoitureBondeSortieValider",controller.findVoitureBondeSortieValider);
+    app.get("/api/vehicule/findVehiculeRecuperer/:utilisateurId",controller.findVehiculeRecuperer);
 }
