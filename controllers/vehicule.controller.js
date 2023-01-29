@@ -2,42 +2,56 @@ const config = require("../config/auth.config");
 const db = require("../models");
 const Vehicule = db.vehicule;
 const utilisateur = db.utilisateur;
+const multer = require('multer');
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'images/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
+  }
+})
+const upload = multer({ storage: storage })
 
-exports.createVehicule = (req, res) => {//insertion un vehicule d'un utilisateur  
- 
-  utilisateur.findOne({ _id: req.body.utilisateurId }, (err, utilisateur) => { //manao if hoe ra le utilisateur taflogy ao anaty liste utilisateur 
+exports.createVehicule = (req, res) => {
+  try{
+  utilisateur.findOne({ _id: req.params.utilisateurId }, (err, utilisateur) => {
     if (err) {
       res.status(500).send({ message: err });
       return;
     }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
     if (!utilisateur) {
       res.status(404).send({ message: "Utilisateur not found" });
       return;
     }
 
+    console.log("vehicule "+req.body);
+;
+
     const car = new Vehicule({
       nom: req.body.nom,
       type: req.body.type,
-      image: req.body.image,
+      image: req.file.originalname,
       immatriculation: req.body.immatriculation,
       dateDebut: req.body.dateDebut,
       DateHeureFin: req.body.DateHeureFin,
       totalTempsReparation: req.body.totalTempsReparation,
       totalPrixReparation: req.body.totalPrixReparation,
       status: req.body.status,
-      utilisateur: utilisateur._id///ty le id anle utilisateur le taflogy
+      utilisateur: utilisateur._id
     });
-
-    car.save((err, vehicule) => {///miinsert eto
+    car.save((err, vehicule) => {
       if (err) {
         res.status(500).send({ message: err });
         return;
       }
-
       res.send({ message: "Vehicule was created successfully", vehicule });
     });
   });
+}catch (err) {
+  console.log(err);
+  res.status(500).send({ err });
+  }
 };
 
 exports.findVoitureClient = (req, res) => { ///maka voiture rehetra client izay niinserena
