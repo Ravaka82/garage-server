@@ -20,4 +20,5 @@ module.exports = function(app) {
         res.sendFile(imagePath);
         console.log(imagePath)
     });
+    app.get('/api/vehicule/stats',controller.stats);
 }

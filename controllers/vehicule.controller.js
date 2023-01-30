@@ -174,3 +174,35 @@ exports.findHistoriqueVehicule = (req, res) => { ///maka voiture rehetra client 
     }
   ).populate("utilisateur")
 }
+exports.stats = async (req, res) => {
+  try {
+    const list = await Vehicule.find({ status: "terminee" });
+    const data = [];
+    list.forEach(car => {
+      const vehicleName = car.nom;
+      const timeArr = car.totalTempsReparation.split(",");
+      console.log(timeArr)
+      const days = timeArr[0] ? parseInt(timeArr[0].replace("j", "")) : 0;
+      const hours = timeArr[1] ? parseInt(timeArr[1].replace("h", "")) : 0;
+      const minutes = timeArr[2] ? parseInt(timeArr[2].replace("mn", "")) : 0;
+      const seconds = timeArr[3] ? parseInt(timeArr[3].replace("s", "")) : 0;
+      console.log(seconds)
+      const totalTime = days * 24 * 60 * 60 + hours * 60 * 60 + minutes * 60 + seconds;
+      console.log(totalTime)
+      const avgTimeInDays = totalTime / (24 * 60 * 60);
+      const avgTimeInHours = totalTime / (60 * 60);//s 
+      const avgTimeInMinutes = totalTime / 60;
+      const avgTimeInSeconds = totalTime;
+      data.push({
+        avgTimeInDays,
+        avgTimeInHours,
+        avgTimeInMinutes,
+        avgTimeInSeconds,
+        vehicleName
+      });
+    });
+    res.send(data);
+  } catch (err) {
+    res.status(500).send({ message: err });
+  }
+};
