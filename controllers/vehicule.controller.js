@@ -5,63 +5,54 @@ const utilisateur = db.utilisateur;
 const multer = require("multer");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "images/");
+    cb(null, 'images/');
   },
   filename: function (req, file, cb) {
-    // récupération de l'extension à partir du type MIME
-    let extension = file.mimetype.split("/")[1];
-    // récupération du nom de fichier stocké dans la base de données
-    let fileName = req.body.fileName;
-    cb(null, fileName + "." + extension);
+    let ext = file.mimetype.split('/')[1];
+    let filename = `image-${Date.now()}.${ext}`;
+    cb(null, filename);
   }
 });
-const upload = multer({ storage: storage });
-
-// route to serve images
-
-
-
 exports.createVehicule = (req, res) => {
-  try{
-    const utilisateurId = req.body.utilisateurId;
-    console.log(utilisateurId)
-  utilisateur.findOne({ _id: utilisateurId }, (err, utilisateur) => {
-    if (err) {
-      res.status(500).send({ message: err });
+  let upload = multer({ storage }).array("image", 1);
+  upload(req, res, function (error) {
+    if (error) {
+      res.status(400).send({ message: error.message });
       return;
     }
-    if (!utilisateur) {
-      res.status(404).send({ message: "Utilisateur not found" });
-      return;
+    try {
+      const utilisateurId = req.body.utilisateurId;
+      console.log("utilisateur"+utilisateurId )
+      utilisateur.findOne({ _id: utilisateurId }, (err, utilisateur) => {
+        if (err) {
+          res.status(500).send({ message: err });
+          return;
+        }
+        if (!utilisateur) {
+          res.status(404).send({ message: "Utilisateur not found" });
+          return;
+        }
+        const vehicule = new Vehicule({
+          nom: req.body.nom,
+          type: req.body.type,
+          image: req.files[0].filename,
+          immatriculation: req.body.immatriculation,
+          utilisateurId: utilisateur._id,
+        });
+        console.log(vehicule)
+        vehicule.save((err, vehicule) => {
+          if (err) {
+            res.status(500).send({ message: err });
+            return;
+          }
+          res.send({ message: "Vehicule was saved successfully!" });
+        });
+      });
+    } catch (error) {
+      res.status(500).send({ message: error.message });
     }
-
-    if (!req.file) {
-      res.status(400).send({ message: "No file provided" });
-      return;
-    }
-
-    const car = new Vehicule({
-      nom: req.body.nom,
-      type: req.body.type,
-      image: req.file.originalname,
-      immatriculation: req.body.immatriculation,
-      utilisateur: utilisateur._id
-    });
-    console.log(car)
-    car.save((err, vehicule) => {
-      if (err) {
-        res.status(500).send({ message: err });
-        return;
-      }
-      res.send({ message: "Vehicule was created successfully", vehicule });
-    });
   });
-}catch (err) {
-  console.log(err);
-  res.status(500).send({ err });
-  }
 };
-
 exports.findVoitureClient = (req, res) => { ///maka voiture rehetra client izay niinserena
     console.log(req.params)
     Vehicule.find({status: "non valider", utilisateur: req.params.utilisateurId },
