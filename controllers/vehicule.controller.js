@@ -37,7 +37,7 @@ exports.createVehicule = (req, res) => {
           type: req.body.type,
           image: req.files[0].filename,
           immatriculation: req.body.immatriculation,
-          utilisateurId: utilisateur._id,
+          utilisateur: utilisateurId,
         });
         console.log(vehicule)
         vehicule.save((err, vehicule) => {
