@@ -14,7 +14,7 @@ module.exports = function(app) {
     app.get("/api/vehicule/findVehiculeRecuperer/:utilisateurId",controller.findVehiculeRecuperer);
     app.post("/api/vehicule/updateStatusVehiculeRecuperer/:_id",controller.updateStatusVehiculeRecuperer);
     app.get("/api/vehicule/findHistoriqueVehicule/:utilisateurId",controller.findHistoriqueVehicule);
-    app.get('/images/:imageName', (req, res) => {
+    app.get('/api/images/:imageName', (req, res) => {
         const imageName = req.params.imageName;
         const imagePath = path.join(__dirname,'..','images', imageName);
         res.sendFile(imagePath);

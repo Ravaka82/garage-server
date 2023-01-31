@@ -57,6 +57,7 @@ exports.findVoitureClient = (req, res) => { ///maka voiture rehetra client izay 
     console.log(req.params)
     Vehicule.find({status: "non valider", utilisateur: req.params.utilisateurId },
       (err, Vehicule) => {
+        console.log(Vehicule)
         if (err) {
           res.status(500).send({ message: err });
           return;
@@ -176,7 +177,7 @@ exports.findHistoriqueVehicule = (req, res) => { ///maka voiture rehetra client 
 }
 exports.stats = async (req, res) => {
   try {
-    const list = await Vehicule.find({ status: "terminee" });
+    const list = await Vehicule.find({ status: "terminee" ,status: "recuperer"});
     const data = [];
     list.forEach(car => {
       const vehicleName = car.nom;

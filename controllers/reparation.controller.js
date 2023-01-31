@@ -38,7 +38,7 @@ exports.createReparation = (req, res) => {
         if (err) {
           return res.status(500).send({ message: err });
         }
-
+      console.log("new"+newReparation);
         res.send({ message: "Reparation created successfully" });
       });
     });
@@ -46,7 +46,7 @@ exports.createReparation = (req, res) => {
 };
 exports.findDepotReparationParVoiture = (req, res) => { ///maka reparation par utilisateur
   console.log(req.params)
-  Reparation.find({ utilisateur: req.params.utilisateurId})
+  Reparation.find({ vehicule: req.params.vehicule})
   .populate(["typeReparation","vehicule"])
   .exec((err, Reparation) => {
     if (err) {
