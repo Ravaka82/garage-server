@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const TypeReparation = mongoose.model(
-    "TypeReparation",
+    "typereparations",
     new mongoose.Schema({
         nomTypeReparation:{type: String},
         description: {type: String},

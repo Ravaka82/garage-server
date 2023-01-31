@@ -4,7 +4,7 @@ const cookieSession = require("cookie-session");
 const app = express();
 app.use(cors());
 var corsOptions = {
-  origin: "https://garage-server-chi.vercel.app/" // Cors ho an'ny côté front
+  origin: "http://localhost:8080" // Cors ho an'ny côté front
 };
 
 app.use(cors(corsOptions));
@@ -90,7 +90,7 @@ function initial() { // Initialisation role any am base de donnee
     }
 };
 app.use(allowCrossDomain);
-
+app.disable('etag');
 //route de base
 app.get("/", (req, res) => {
   res.json({ message: "Bienvenue API" });
