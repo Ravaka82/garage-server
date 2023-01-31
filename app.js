@@ -28,7 +28,7 @@ const Role = db.role;
 
 // Ao am db.config.js no manova anle url de connexion
 db.mongoose
-  .connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
+  .connect(dbConfig.MongooseURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
