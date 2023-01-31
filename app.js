@@ -105,7 +105,7 @@ require('./routes/typeReparation.routes')(app);
 require('./routes/reparation.routes')(app);
 require('./routes/paiement.routes')(app);
 // Demarrage serveur
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Vous etes connectee au port ${PORT}.`);
 });
