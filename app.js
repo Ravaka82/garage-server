@@ -4,7 +4,7 @@ const cookieSession = require("cookie-session");
 const app = express();
 app.use(cors());
 var corsOptions = {
-  origin: "https://garage-server-git-main-ravaka82.vercel.app/" // Cors ho an'ny côté front
+  origin: "https://garage-server-chi.vercel.app/" // Cors ho an'ny côté front
 };
 
 app.use(cors(corsOptions));
