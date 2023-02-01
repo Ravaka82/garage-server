@@ -1,7 +1,7 @@
 const controller = require("../controllers/paiement.controller");
 var bodyParser = require('body-parser');
 const multer = require("multer");
-var upload = multer({ dest: 'uploads/' });
+// var upload = multer({ dest: 'uploads/' });
 
 module.exports = function(app) {
     app.post("/api/paiement/validerPaiement", controller.validerPaiement);
