@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const cookieSession = require("cookie-session");
+const fileUpload = require('express-fileupload');
 const app = express();
 app.use(cors());
 var corsOptions = {
@@ -8,7 +9,11 @@ var corsOptions = {
 };
 
 app.use(cors(corsOptions));
-
+app.use(
+  fileUpload({
+    useTempFiles: true
+  })
+);
 app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
@@ -106,7 +111,7 @@ require('./routes/reparation.routes')(app);
 require('./routes/paiement.routes')(app);
 require('./routes/auth.routes')(app);
 // Demarrage serveur
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Vous etes connectee au port ${PORT}.`);
 });

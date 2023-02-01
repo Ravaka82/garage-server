@@ -2,7 +2,68 @@ const config = require("../config/auth.config");
 const db = require("../models");
 const Vehicule = db.vehicule;
 const utilisateur = db.utilisateur;
-const multer = require("multer");
+
+const cloudinary = require("cloudinary").v2;
+cloudinary.config({
+  cloud_name: 'doqw2jsg3',
+  api_key: '472566731662461',
+  api_secret: 'nGIW9NMQwDsXwQDI42nQ9aNjekk'
+});
+
+  exports.createVehicule = async(req, res) => {
+    try {
+      const file = JSON.parse(JSON.stringify(req.files.file))
+
+      const image = await cloudinary.uploader.upload(
+        file.tempFilePath,
+        (result) => result
+      );
+      const utilisateurId = req.body.utilisateurId;
+      utilisateur.findOne({ _id: utilisateurId }, (err, utilisateur) => {
+        if (err) {
+          res.status(500).send({ message: err });
+          return;
+        }
+        if (!utilisateur) {
+          res.status(404).send({ message: "Utilisateur not found" });
+          return;
+        }
+        const vehicule = new Vehicule({
+          nom: req.body.nom,
+          type: req.body.type,
+          image: image.secure_url,
+          immatriculation: req.body.immatriculation,
+          utilisateur: utilisateurId
+        });
+        vehicule.save((err, vehicule) => {
+          if (err) {
+            res.status(500).send({ message: err });
+            return;
+          }
+          res.send({ message: "Vehicule was saved successfully!" });
+        });
+      });
+    } catch (error) {
+      res.status(500).send({ message: error.message });
+    }
+    // if (!image) {
+    //   res.status(400).send({ message: "No image provided" });
+    //   return;
+    // }
+    // cloudinary.uploader.upload(image.path, (error, result) => {
+    // if (error) {
+    //   res.status(400).send({ message: error.message });
+    //   return;
+    // }
+    // try {
+    
+    //   } catch (error) {
+    //     res.status(500).send({ message: error.message });
+    //   }
+    // });
+  };
+
+/*upload multer ty 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'images/');
@@ -53,6 +114,7 @@ exports.createVehicule = (req, res) => {
     }
   });
 };
+*/
 exports.findVoitureClient = (req, res) => { ///maka voiture rehetra client izay niinserena
     console.log(req.params)
     Vehicule.find({status: "non valider", utilisateur: req.params.utilisateurId },
