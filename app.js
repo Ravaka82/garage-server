@@ -97,13 +97,14 @@ app.get("/", (req, res) => {
 });
 
 //Route API
-require('./routes/auth.routes')(app);
+
 require('./routes/utilisateur.routes')(app);
 require('./routes/role.routes')(app);
 require('./routes/vehicule.routes')(app);
 require('./routes/typeReparation.routes')(app);
 require('./routes/reparation.routes')(app);
 require('./routes/paiement.routes')(app);
+require('./routes/auth.routes')(app);
 // Demarrage serveur
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
