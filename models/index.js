@@ -5,11 +5,7 @@ mongoose.Promise = global.Promise;
 const db = {};
 
 db.mongoose = mongoose;
-db.mongoose.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    strictQuery: true
-  });
+
 db.utilisateur = require("./utilisateur.model");
 db.role = require("./role.model");
 db.reparation = require("./reparation.model");
