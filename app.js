@@ -5,7 +5,7 @@ const fileUpload = require('express-fileupload');
 const app = express();
 app.use(cors());
 var corsOptions = {
-  origin: "https://m1p10mean-ravaka-sarobidy-frontend-kifug0kjr-ravaka82.vercel.app/" // Cors ho an'ny côté front
+  origin: "https://m1p10mean-ravaka-sarobidy-frontend.vercel.app/" // Cors ho an'ny côté front
 };
 
 app.use(cors(corsOptions));
