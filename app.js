@@ -4,11 +4,10 @@ const cookieSession = require("cookie-session");
 const fileUpload = require('express-fileupload');
 const app = express();
 app.use(cors());
-var corsOptions = {
-  origin: "https://m1p10mean-ravaka-sarobidy-frontend.vercel.app/" // Cors ho an'ny côté front
-};
+// var corsOptions = {
+//   origin: "" // Cors ho an'ny côté front
+// };
 
-app.use(cors(corsOptions));
 app.use(
   fileUpload({
     useTempFiles: true
