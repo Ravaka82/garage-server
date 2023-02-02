@@ -1,6 +1,6 @@
 const controller = require("../controllers/paiement.controller");
 var bodyParser = require('body-parser');
-const multer = require("multer");
+// const multer = require("multer");
 // var upload = multer({ dest: 'uploads/' });
 
 module.exports = function(app) {
