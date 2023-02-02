@@ -2,23 +2,32 @@ const config = require("../config/auth.config");
 const db = require("../models");
 const Vehicule = db.vehicule;
 const utilisateur = db.utilisateur;
-
+const streamifier = require('streamifier');
 const cloudinary = require("cloudinary").v2;
 cloudinary.config({
   cloud_name: 'doqw2jsg3',
   api_key: '472566731662461',
   api_secret: 'nGIW9NMQwDsXwQDI42nQ9aNjekk',
-  secure: true
+  secure:true
 });
-
+let streamUpload = (file) => {
+  return new Promise((resolve, reject) => {
+      let stream = cloudinary.uploader.upload_stream(
+          (error, result) => {
+              if (result) {
+                  resolve(result);
+              } else {
+                  reject(error);
+              }
+          }
+      );
+      streamifier.createReadStream(file.buffer).pipe(stream);
+  });
+};
   exports.createVehicule = async(req, res) => {
     try {
-      const file = JSON.parse(JSON.stringify(req.files.file))
-
-      const image = await cloudinary.uploader.upload(
-        file.tempFilePath,
-        (result) => result
-      );
+      const file = req.file
+      let result = await streamUpload(file);
       const utilisateurId = req.body.utilisateurId;
       utilisateur.findOne({ _id: utilisateurId }, (err, utilisateur) => {
         if (err) {
@@ -32,7 +41,7 @@ cloudinary.config({
         const vehicule = new Vehicule({
           nom: req.body.nom,
           type: req.body.type,
-          image: image.secure_url,
+          image: result.url,
           immatriculation: req.body.immatriculation,
           utilisateur: utilisateurId
         });

@@ -9,11 +9,6 @@ var corsOptions = {
 };
 
 app.use(cors(corsOptions));
-app.use(
-  fileUpload({
-    useTempFiles: true
-  })
-);
 app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
