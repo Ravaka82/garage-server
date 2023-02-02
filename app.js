@@ -4,10 +4,11 @@ const cookieSession = require("cookie-session");
 const fileUpload = require('express-fileupload');
 const app = express();
 app.use(cors());
-// var corsOptions = {
-//   origin: "" // Cors ho an'ny côté front
-// };
+var corsOptions = {
+  origin: "*" // Cors ho an'ny côté front
+};
 
+app.use(cors(corsOptions));
 app.use(
   fileUpload({
     useTempFiles: true
