@@ -7,7 +7,8 @@ const cloudinary = require("cloudinary").v2;
 cloudinary.config({
   cloud_name: 'doqw2jsg3',
   api_key: '472566731662461',
-  api_secret: 'nGIW9NMQwDsXwQDI42nQ9aNjekk'
+  api_secret: 'nGIW9NMQwDsXwQDI42nQ9aNjekk',
+  secure: true
 });
 
   exports.createVehicule = async(req, res) => {
